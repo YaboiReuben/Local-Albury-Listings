@@ -1,0 +1,7 @@
+{
+  "name": "Local Albury Listing",
+  "description": "A local business directory for Albury with multi-tier listings, password-protected tiers, and a hidden admin management portal.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
