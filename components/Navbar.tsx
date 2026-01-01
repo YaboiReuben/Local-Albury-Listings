@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [clickCount, setClickCount] = useState(0);
@@ -18,13 +18,22 @@ const Navbar: React.FC = () => {
     setTimeout(() => setClickCount(0), 3000);
   };
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  const scrollToSection = (id: string) => {
     if (location.pathname !== '/') {
-      // If we're not on the home page, navigate home first
-      e.preventDefault();
-      navigate('/' + targetId);
+      navigate('/');
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
-    // If we're on the home page, default anchor behavior works fine
   };
 
   return (
@@ -40,10 +49,30 @@ const Navbar: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-4 sm:gap-8 font-medium text-gray-600">
-            <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="hover:text-blue-600 transition-colors">Home</a>
-            <a href="#post" onClick={(e) => handleNavClick(e, '#post')} className="hover:text-blue-600 transition-colors">Post</a>
-            <a href="#tiers" onClick={(e) => handleNavClick(e, '#tiers')} className="hover:text-blue-600 transition-colors">Tiers</a>
-            <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:text-blue-600 transition-colors">Contact</a>
+            <button 
+              onClick={() => scrollToSection('home')} 
+              className="hover:text-blue-600 transition-colors focus:outline-none"
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => scrollToSection('post')} 
+              className="hover:text-blue-600 transition-colors focus:outline-none"
+            >
+              Post
+            </button>
+            <button 
+              onClick={() => scrollToSection('tiers')} 
+              className="hover:text-blue-600 transition-colors focus:outline-none"
+            >
+              Tiers
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className="hover:text-blue-600 transition-colors focus:outline-none"
+            >
+              Contact
+            </button>
           </div>
         </div>
       </div>
